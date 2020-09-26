@@ -3,14 +3,22 @@
   service:
     name: node_exporter
     state: restarted
+
 - name: restart seeksample
   service:
     name: seeksample
     state: restarted
+
 - name: restart tcpmetrics
   service:
     name: tcpmetrics
     state: restarted
+
+- name: restart db_replication_mon
+  service:
+    name: db_replication_mon
+    state: restarted
+
 - name: restart collector-metrics
   service:
     name: collector-metrics

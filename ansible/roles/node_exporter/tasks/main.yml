@@ -89,6 +89,26 @@
     dest: /etc/systemd/system/tcpmetrics.service
   when: "'have_tcpmetrics' in group_names"
 
+- name: Install db_replication_mon on active DB
+  copy: src=db_replication_mon_active dest=/srv/db_replication_mon mode=0555
+  when: "'db_active' in group_names"
+  tags: db_replication_mon
+
+- name: Install db_replication_mon on standby DB
+  copy: src=db_replication_mon_standby dest=/srv/db_replication_mon mode=0555
+  when: "'db_standby' in group_names"
+  tags: db_replication_mon
+
+- name: Install db_replication_mon systemd service file
+  notify:
+  - systemctl daemon-reload
+  - restart db_replication_mon
+  template:
+    src: db_replication_mon.service
+    dest: /etc/systemd/system/db_replication_mon.service
+  when: "'db_active' in group_names or 'db_standby' in group_names"
+  tags: db_replication_mon
+
 - name: Install collector-metrics systemd service file
   notify:
   - restart collector-metrics

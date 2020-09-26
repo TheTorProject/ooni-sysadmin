@@ -1,0 +1,22 @@
+#!/bin/bash
+# Deployed by ansible
+# See roles/node_exporter/files/db_replication_mon_standby
+# standby database --> active
+#
+# Errors are reported as RTT=0
+
+set -u
+FN=/run/nodeexp/db_replication_socket.prom
+while true; do
+  socket_rtt=$(ss -ntpi state established 'dst 37.218.240.56 dport = 5432' | tr -s " " "\n" | grep ^rtt: | cut -c5- | cut -d'/' -f1)
+  socket_rtt=${socket_rtt:-0}
+  ping_rtt=$(ping -w 1 -c 1 10.1.0.2 | tail -n1  | cut -d'/' -f5)
+  ping_rtt=${ping_rtt:-0}
+
+  cat <<EOF > $FN.tmp
+db_replication_rtt{role="standby"} $socket_rtt
+ping_rtt{role="standby"} $ping_rtt
+EOF
+  mv $FN.tmp $FN
+  sleep 1
+done

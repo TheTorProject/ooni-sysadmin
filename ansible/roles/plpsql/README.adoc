@@ -1,0 +1,8 @@
+PostgreSQL metadb database
+
+Deploys a temporary traffic forwarder using A VPN
+  HKG -> mia-ps-test.ooni.nu -> AMS
+
+Runs db_replication_mon.service on HKG and AMS db to monitor the replication
+sudo systemctl status db_replication_mon.service
+sudo journalctl -f -u db_replication_mon

@@ -1,0 +1,27 @@
+# Deployed by ansible
+# see roles/node_exporter/templates/db_replication_mon.service
+[Unit]
+Description=DB replication monitor
+
+[Service]
+User=root
+Group=root
+
+ExecStartPre=/usr/bin/install --owner root --group root --mode 0755 --directory {{ node_exporter_textfiles_path }}
+ExecStart=/srv/db_replication_mon
+KillMode=process
+Restart=always
+
+# Hardening
+CapabilityBoundingSet=CAP_SETUID CAP_SETGID CAP_NET_RAW
+SystemCallFilter=~@clock @debug @cpu-emulation @keyring @module @mount @obsolete @raw-io @reboot @swap
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+
+[Install]
+WantedBy=multi-user.target
