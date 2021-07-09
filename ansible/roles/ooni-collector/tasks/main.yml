@@ -147,14 +147,18 @@
 - name: Setup the sshfeeder account
   user:
     name: sshfeeder
+    group: sshfeeder
+    groups: "{{ collector_user }}"
     createhome: yes
     append: yes
     shell: /bin/bash
     home: "/home/sshfeeder"
     system: no
+  tags: collector_ssh
 
 - name: Set authorized key for sshfeeder
   authorized_key:
     user: sshfeeder
     state: present
     key: "{{ sshfeeder_key }}"
+  tags: collector_ssh

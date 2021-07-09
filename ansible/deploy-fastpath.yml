@@ -1,0 +1,6 @@
+---
+- import_playbook: ansible-version.yml
+
+- hosts: fastpath.ooni.nu
+  roles:
+    - role: fastpath

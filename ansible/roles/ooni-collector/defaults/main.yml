@@ -7,5 +7,5 @@ collector_tag: '20190221-0980b82a'
 collector_data_dir: '{{ CHANGE_ME }}' # it varies across collectors
 collector_domain: '{{ CHANGE_ME }}'
 with_nginx: yes
-sshfeeder_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3MZP0tYUzaZOZa8JhRIx3PiTXwXfwQdTPa/RwDmwcA"
+sshfeeder_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAxyZVlDHc50fim5qWkf+yQhVpVR6d4btNBE8xb4XCd fastpath"
 ...

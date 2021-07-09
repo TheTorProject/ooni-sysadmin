@@ -1,0 +1,7 @@
+# Deployed by https://github.com/ooni/sysadmin/blob/master/ansible/roles/fastpath
+# deploy-fastpath.yml
+# roles/fastpath/tasks/main.yml
+# roles/fastpath/templates/fastpath.conf.j2
+
+[DEFAULT]
+collectors = {{ groups['active_collector'] | join(' ') }}
