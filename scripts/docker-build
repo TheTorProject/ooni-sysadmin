@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eu
 
 # Build Dockerfile from clean git repo instead of working copy to prevent
 # mistakes with working copy being copied to docker image.
@@ -43,10 +44,8 @@ fi
 # That's image for https://hub.docker.com/r/openobservatory/
 img="openobservatory/$img_slug"
 
-ver="$1"
-if [ -z "$ver" ]; then
-    ver="$(date '+%Y%m%d')"
-fi
+ver="$(date '+%Y%m%d')"
+ver="${1:-$ver}"
 ver="${ver}-${git_head8}" # tags in git repo are not used, so HEAD is stored as image version
 
 if [ -n "$(git status --short .)" ]; then
@@ -56,7 +55,7 @@ if [ -n "$(git status --short .)" ]; then
 fi
 
 echo "Going to build $img:$ver & $img:latest"
-read -p "Press enter to continue, ^C if that's wrong"
+#read -p "Press enter to continue, CTRL-c otherwise"
 
 set -o errexit
 set -o pipefail
@@ -67,7 +66,7 @@ set -o pipefail
 )
 
 echo "Going to push $img:$ver & $img:latest"
-read -p "Press enter to continue, ^C if that's wrong"
+read -p "Press enter to continue, CTRL-c otherwise"
 
 for tag in "$img:$ver" "$img:latest"; do (
     set -o xtrace
